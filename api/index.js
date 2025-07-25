@@ -1,15 +1,20 @@
+import getRawBody from 'raw-body';
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Only POST requests allowed' });
   }
 
   try {
+    const rawBody = await getRawBody(req);
+    const parsedBody = JSON.parse(rawBody);
+
     const response = await fetch("https://n8n.luquin.com/webhook/MC/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(req.body)
+      body: JSON.stringify(parsedBody)
     });
 
     if (response.ok) {
@@ -29,4 +34,4 @@ export default async function handler(req, res) {
       message: "Proxy failed: " + err.message
     });
   }
-}   
+}
