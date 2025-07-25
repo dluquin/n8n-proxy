@@ -1,4 +1,8 @@
-import getRawBody from 'raw-body';
+export const config = {
+  api: {
+    bodyParser: true,
+  },
+};
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -6,8 +10,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const rawBody = await getRawBody(req);
-    const parsedBody = JSON.parse(rawBody.toString('utf-8'));
+    const parsedBody = req.body;
 
     const response = await fetch("https://n8n.luquin.com/webhook/MC/", {
       method: "POST",
