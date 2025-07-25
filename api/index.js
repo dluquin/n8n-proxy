@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
   try {
     const rawBody = await getRawBody(req);
-    const parsedBody = JSON.parse(rawBody);
+    const parsedBody = JSON.parse(rawBody.toString('utf-8'));
 
     const response = await fetch("https://n8n.luquin.com/webhook/MC/", {
       method: "POST",
